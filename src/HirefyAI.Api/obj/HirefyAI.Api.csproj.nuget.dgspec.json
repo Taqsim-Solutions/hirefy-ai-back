@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Sardor\\Desktop\\HirefyAI\\src\\HirefyAI.Api\\HirefyAI.Api.csproj": {}
+    "C:\\Users\\Sardor\\Desktop\\Learning\\hirefy-ai-back\\src\\HirefyAI.Api\\HirefyAI.Api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Sardor\\Desktop\\HirefyAI\\src\\HirefyAI.Api\\HirefyAI.Api.csproj": {
+    "C:\\Users\\Sardor\\Desktop\\Learning\\hirefy-ai-back\\src\\HirefyAI.Api\\HirefyAI.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Sardor\\Desktop\\HirefyAI\\src\\HirefyAI.Api\\HirefyAI.Api.csproj",
+        "projectUniqueName": "C:\\Users\\Sardor\\Desktop\\Learning\\hirefy-ai-back\\src\\HirefyAI.Api\\HirefyAI.Api.csproj",
         "projectName": "HirefyAI.Api",
-        "projectPath": "C:\\Users\\Sardor\\Desktop\\HirefyAI\\src\\HirefyAI.Api\\HirefyAI.Api.csproj",
+        "projectPath": "C:\\Users\\Sardor\\Desktop\\Learning\\hirefy-ai-back\\src\\HirefyAI.Api\\HirefyAI.Api.csproj",
         "packagesPath": "C:\\Users\\Sardor\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Sardor\\Desktop\\HirefyAI\\src\\HirefyAI.Api\\obj\\",
+        "outputPath": "C:\\Users\\Sardor\\Desktop\\Learning\\hirefy-ai-back\\src\\HirefyAI.Api\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -33,11 +33,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\Sardor\\Desktop\\HirefyAI\\src\\HirefyAI.Application\\HirefyAI.Application.csproj": {
-                "projectPath": "C:\\Users\\Sardor\\Desktop\\HirefyAI\\src\\HirefyAI.Application\\HirefyAI.Application.csproj"
+              "C:\\Users\\Sardor\\Desktop\\Learning\\hirefy-ai-back\\src\\HirefyAI.Application\\HirefyAI.Application.csproj": {
+                "projectPath": "C:\\Users\\Sardor\\Desktop\\Learning\\hirefy-ai-back\\src\\HirefyAI.Application\\HirefyAI.Application.csproj"
               },
-              "C:\\Users\\Sardor\\Desktop\\HirefyAI\\src\\HirefyAI.Infrastructure\\HirefyAI.Infrastructure.csproj": {
-                "projectPath": "C:\\Users\\Sardor\\Desktop\\HirefyAI\\src\\HirefyAI.Infrastructure\\HirefyAI.Infrastructure.csproj"
+              "C:\\Users\\Sardor\\Desktop\\Learning\\hirefy-ai-back\\src\\HirefyAI.Infrastructure\\HirefyAI.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\Sardor\\Desktop\\Learning\\hirefy-ai-back\\src\\HirefyAI.Infrastructure\\HirefyAI.Infrastructure.csproj"
               }
             }
           }
@@ -92,14 +92,14 @@
         }
       }
     },
-    "C:\\Users\\Sardor\\Desktop\\HirefyAI\\src\\HirefyAI.Application\\HirefyAI.Application.csproj": {
+    "C:\\Users\\Sardor\\Desktop\\Learning\\hirefy-ai-back\\src\\HirefyAI.Application\\HirefyAI.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Sardor\\Desktop\\HirefyAI\\src\\HirefyAI.Application\\HirefyAI.Application.csproj",
+        "projectUniqueName": "C:\\Users\\Sardor\\Desktop\\Learning\\hirefy-ai-back\\src\\HirefyAI.Application\\HirefyAI.Application.csproj",
         "projectName": "HirefyAI.Application",
-        "projectPath": "C:\\Users\\Sardor\\Desktop\\HirefyAI\\src\\HirefyAI.Application\\HirefyAI.Application.csproj",
+        "projectPath": "C:\\Users\\Sardor\\Desktop\\Learning\\hirefy-ai-back\\src\\HirefyAI.Application\\HirefyAI.Application.csproj",
         "packagesPath": "C:\\Users\\Sardor\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Sardor\\Desktop\\HirefyAI\\src\\HirefyAI.Application\\obj\\",
+        "outputPath": "C:\\Users\\Sardor\\Desktop\\Learning\\hirefy-ai-back\\src\\HirefyAI.Application\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -121,11 +121,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\Sardor\\Desktop\\HirefyAI\\src\\HirefyAI.Domain\\HirefyAI.Domain.csproj": {
-                "projectPath": "C:\\Users\\Sardor\\Desktop\\HirefyAI\\src\\HirefyAI.Domain\\HirefyAI.Domain.csproj"
+              "C:\\Users\\Sardor\\Desktop\\Learning\\hirefy-ai-back\\src\\HirefyAI.Domain\\HirefyAI.Domain.csproj": {
+                "projectPath": "C:\\Users\\Sardor\\Desktop\\Learning\\hirefy-ai-back\\src\\HirefyAI.Domain\\HirefyAI.Domain.csproj"
               },
-              "C:\\Users\\Sardor\\Desktop\\HirefyAI\\src\\HirefyAI.Infrastructure\\HirefyAI.Infrastructure.csproj": {
-                "projectPath": "C:\\Users\\Sardor\\Desktop\\HirefyAI\\src\\HirefyAI.Infrastructure\\HirefyAI.Infrastructure.csproj"
+              "C:\\Users\\Sardor\\Desktop\\Learning\\hirefy-ai-back\\src\\HirefyAI.Infrastructure\\HirefyAI.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\Sardor\\Desktop\\Learning\\hirefy-ai-back\\src\\HirefyAI.Infrastructure\\HirefyAI.Infrastructure.csproj"
               }
             }
           }
@@ -171,14 +171,14 @@
         }
       }
     },
-    "C:\\Users\\Sardor\\Desktop\\HirefyAI\\src\\HirefyAI.Domain\\HirefyAI.Domain.csproj": {
+    "C:\\Users\\Sardor\\Desktop\\Learning\\hirefy-ai-back\\src\\HirefyAI.Domain\\HirefyAI.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Sardor\\Desktop\\HirefyAI\\src\\HirefyAI.Domain\\HirefyAI.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\Sardor\\Desktop\\Learning\\hirefy-ai-back\\src\\HirefyAI.Domain\\HirefyAI.Domain.csproj",
         "projectName": "HirefyAI.Domain",
-        "projectPath": "C:\\Users\\Sardor\\Desktop\\HirefyAI\\src\\HirefyAI.Domain\\HirefyAI.Domain.csproj",
+        "projectPath": "C:\\Users\\Sardor\\Desktop\\Learning\\hirefy-ai-back\\src\\HirefyAI.Domain\\HirefyAI.Domain.csproj",
         "packagesPath": "C:\\Users\\Sardor\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Sardor\\Desktop\\HirefyAI\\src\\HirefyAI.Domain\\obj\\",
+        "outputPath": "C:\\Users\\Sardor\\Desktop\\Learning\\hirefy-ai-back\\src\\HirefyAI.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -237,14 +237,14 @@
         }
       }
     },
-    "C:\\Users\\Sardor\\Desktop\\HirefyAI\\src\\HirefyAI.Infrastructure\\HirefyAI.Infrastructure.csproj": {
+    "C:\\Users\\Sardor\\Desktop\\Learning\\hirefy-ai-back\\src\\HirefyAI.Infrastructure\\HirefyAI.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Sardor\\Desktop\\HirefyAI\\src\\HirefyAI.Infrastructure\\HirefyAI.Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\Sardor\\Desktop\\Learning\\hirefy-ai-back\\src\\HirefyAI.Infrastructure\\HirefyAI.Infrastructure.csproj",
         "projectName": "HirefyAI.Infrastructure",
-        "projectPath": "C:\\Users\\Sardor\\Desktop\\HirefyAI\\src\\HirefyAI.Infrastructure\\HirefyAI.Infrastructure.csproj",
+        "projectPath": "C:\\Users\\Sardor\\Desktop\\Learning\\hirefy-ai-back\\src\\HirefyAI.Infrastructure\\HirefyAI.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\Sardor\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Sardor\\Desktop\\HirefyAI\\src\\HirefyAI.Infrastructure\\obj\\",
+        "outputPath": "C:\\Users\\Sardor\\Desktop\\Learning\\hirefy-ai-back\\src\\HirefyAI.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -266,8 +266,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\Sardor\\Desktop\\HirefyAI\\src\\HirefyAI.Domain\\HirefyAI.Domain.csproj": {
-                "projectPath": "C:\\Users\\Sardor\\Desktop\\HirefyAI\\src\\HirefyAI.Domain\\HirefyAI.Domain.csproj"
+              "C:\\Users\\Sardor\\Desktop\\Learning\\hirefy-ai-back\\src\\HirefyAI.Domain\\HirefyAI.Domain.csproj": {
+                "projectPath": "C:\\Users\\Sardor\\Desktop\\Learning\\hirefy-ai-back\\src\\HirefyAI.Domain\\HirefyAI.Domain.csproj"
               }
             }
           }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "DXsa94Sk36A=",
+  "dgSpecHash": "RG1+hEY5crI=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Sardor\\Desktop\\HirefyAI\\src\\HirefyAI.Application\\HirefyAI.Application.csproj",
+  "projectFilePath": "C:\\Users\\Sardor\\Desktop\\Learning\\hirefy-ai-back\\src\\HirefyAI.Application\\HirefyAI.Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Sardor\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\Sardor\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",

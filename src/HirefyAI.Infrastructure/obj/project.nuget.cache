@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "GbIPgYrBdgA=",
+  "dgSpecHash": "N8KI33BD/ww=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Sardor\\Desktop\\HirefyAI\\src\\HirefyAI.Infrastructure\\HirefyAI.Infrastructure.csproj",
+  "projectFilePath": "C:\\Users\\Sardor\\Desktop\\Learning\\hirefy-ai-back\\src\\HirefyAI.Infrastructure\\HirefyAI.Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Sardor\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\Sardor\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
