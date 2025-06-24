@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HirefyAI.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bd2ddebf1108864f64d7be3f63b76052c739ec10")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b818731779be2dac1ee62761a1050ac4b8466091")]
 [assembly: System.Reflection.AssemblyProductAttribute("HirefyAI.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HirefyAI.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
