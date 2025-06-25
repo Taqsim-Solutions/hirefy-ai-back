@@ -1,5 +1,6 @@
 using HirefyAI.Api.Extensions;
 using HirefyAI.Application;
+using HirefyAI.Application.DataTransferObjects.Auth;
 using HirefyAI.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Middlewares;
@@ -11,12 +12,24 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwagger();
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure();
 
 builder.Services.AddHttpContextAccessor();
+
+var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>();
+builder.Services.AddAuthentication(jwtSettings);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder => builder
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+});
 
 var app = builder.Build();
 
@@ -36,7 +49,8 @@ if (app.Environment.IsDevelopment())
 app.UseExceptionHandlingMiddleware();
 
 app.UseHttpsRedirection();
-
+app.UseCors("AllowAllOrigins");
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

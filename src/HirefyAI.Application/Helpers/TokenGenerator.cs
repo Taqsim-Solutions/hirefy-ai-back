@@ -1,4 +1,5 @@
-﻿using HirefyAI.Application.DataTransferObjects.Auth;
+﻿using Common.ServiceAttribute;
+using HirefyAI.Application.DataTransferObjects.Auth;
 using HirefyAI.Domain.Entities;
 using HirefyAI.Infrastructure;
 using Microsoft.EntityFrameworkCore;
@@ -8,8 +9,9 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace HirefyAI.Application.Services.Helpers
+namespace HirefyAI.Application.Helpers
 {
+    [ScopedService]
     public class TokenGenerator
     {
         private readonly JwtSettings _jwtSettings;
@@ -28,7 +30,6 @@ namespace HirefyAI.Application.Services.Helpers
             var claims = new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.FirstName),
                 new Claim(ClaimTypes.Email, user.Email),
             };
 

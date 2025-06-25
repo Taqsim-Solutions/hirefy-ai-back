@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HirefyAI.Infrastructure.Migrations
 {
     [DbContext(typeof(HirefyAIDb))]
-    [Migration("20250625122436_Init")]
+    [Migration("20250625145733_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -290,9 +290,12 @@ namespace HirefyAI.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("PasswordHash")
+                    b.Property<string>("RefreshToken")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<DateTime>("RefreshTokenExpireDate")
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 

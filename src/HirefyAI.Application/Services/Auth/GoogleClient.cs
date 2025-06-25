@@ -1,6 +1,7 @@
-﻿using HirefyAI.Application.DataTransferObjects.Auth;
+﻿using Common.ServiceAttribute;
+using HirefyAI.Application.DataTransferObjects.Auth;
 using HirefyAI.Application.DataTransferObjects.Auth.Google;
-using HirefyAI.Application.Services.Helpers;
+using HirefyAI.Application.Helpers;
 using HirefyAI.Domain.Entities;
 using HirefyAI.Infrastructure;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using static Google.Apis.Auth.GoogleJsonWebSignature;
 
 namespace HirefyAI.Application.Services.Auth
 {
+    [ScopedService]
     public class GoogleClient
     {
         private readonly HirefyAIDb _hirefyAIDb;

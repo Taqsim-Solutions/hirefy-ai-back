@@ -1,8 +1,10 @@
-﻿using System.Security.Cryptography;
+﻿using Common.ServiceAttribute;
+using System.Security.Cryptography;
 using System.Text;
 
-namespace HirefyAI.Application.Services.Helpers
+namespace HirefyAI.Application.Helpers
 {
+    [ScopedService]
     public class PasswordHasher
     {
         private const int KeySize = 32;

@@ -287,9 +287,12 @@ namespace HirefyAI.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("PasswordHash")
+                    b.Property<string>("RefreshToken")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<DateTime>("RefreshTokenExpireDate")
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
