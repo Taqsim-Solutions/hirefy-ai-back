@@ -9,6 +9,12 @@ namespace HirefyAI.Api.Controllers
     public class AuthController : ControllerBase
     {
         private readonly GoogleClient _googleClient;
+
+        public AuthController(GoogleClient googleClient)
+        {
+            _googleClient = googleClient;
+        }
+
         [HttpPost("google-login")]
         public async Task<IActionResult> LoginWithGoogleAccountAsync(GoogleDto googleLoginDto)
         {
