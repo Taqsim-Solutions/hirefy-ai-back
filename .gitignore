@@ -415,3 +415,4 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+/src/HirefyAI.Api/appsettings.Development.json
