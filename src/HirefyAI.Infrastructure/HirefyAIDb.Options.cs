@@ -66,13 +66,19 @@ namespace HirefyAI.Infrastructure
             var userId = httpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             return userId ?? "System";
-
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             // Default database Sql Server, you can change it to your preferred database provider.
-            optionsBuilder.UseSqlServer(connectionString: "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=HirefyAIDb;");
+            //optionsBuilder.UseSqlServer(connectionString: "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=HirefyAIDb;");
+            optionsBuilder.UseNpgsql(connectionString: "Host=localhost;Database=HirefyAIDb;Username=postgres;Password=Sardor0618!;");
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // Apply configurations for entities
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(HirefyAIDb).Assembly);
         }
     }
 }
