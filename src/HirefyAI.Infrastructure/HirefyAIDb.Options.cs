@@ -8,7 +8,7 @@ namespace HirefyAI.Infrastructure
     public partial class HirefyAIDb
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public HirefyAIDb(IHttpContextAccessor httpContextAccessor) 
+        public HirefyAIDb(IHttpContextAccessor httpContextAccessor,DbContextOptions<HirefyAIDb> _options) : base(_options)
             => _httpContextAccessor = httpContextAccessor;
 
         /// <summary>
