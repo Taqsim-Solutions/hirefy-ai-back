@@ -6,8 +6,6 @@ namespace HirefyAI.Domain.Entities
     {
         public string Name { get; set; }
         public string Description { get; set; } = string.Empty;
-        public int UserId { get; set; }
-        public User User { get; set; }
         public bool IsDeleted { get; set; }
     }
 }
