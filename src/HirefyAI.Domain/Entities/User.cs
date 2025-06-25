@@ -7,7 +7,8 @@ namespace HirefyAI.Domain.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; } = string.Empty;
         public string Email { get; set; }
-        public string PasswordHash { get; set; } = string.Empty;
+        public string RefreshToken { get; set; }
+        public DateTime RefreshTokenExpireDate { get; set; }
         public bool IsDeleted { get; set; }
 
         public ICollection<Resume> Resumes { get; set; } = new List<Resume>();
