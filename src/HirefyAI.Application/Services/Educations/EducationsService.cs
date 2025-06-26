@@ -13,6 +13,7 @@ using Common;
 using DataTransferObjects.Educations;
 using HirefyAI.Infrastructure;
 using HirefyAI.Domain.Entities;
+using HirefyAI.Application.Helpers;
 
 namespace Services.Educations
 {
@@ -21,15 +22,18 @@ namespace Services.Educations
     {
         private readonly HirefyAIDb _hirefyAIDb;
         private readonly IMapper _mapper;
-        public EducationsService(HirefyAIDb hirefyAIDb, IMapper mapper)
+        private readonly UserHelper _userHelper;
+        public EducationsService(HirefyAIDb hirefyAIDb, IMapper mapper, UserHelper userHelper)
         {
             _hirefyAIDb = hirefyAIDb;
             _mapper = mapper;
+            _userHelper = userHelper;
         }
 
         public async Task<EducationViewModel> AddAsync(EducationCreationDto educationCreationDto)
         {
             var entity = _mapper.Map<Education>(educationCreationDto);
+            entity.UserId = _userHelper.UserId;
             var entry = await _hirefyAIDb.Set<Education>().AddAsync(entity);
             await _hirefyAIDb.SaveChangesAsync();
             return _mapper.Map<EducationViewModel>(entry.Entity);
@@ -37,20 +41,27 @@ namespace Services.Educations
 
         public async Task<List<EducationViewModel>> GetAllAsync()
         {
-            var entities = await _hirefyAIDb.Set<Education>().ToListAsync();
+            var entities = await _hirefyAIDb.Set<Education>()
+                .Where(x => x.UserId == _userHelper.UserId)
+                .ToListAsync();
+
             return _mapper.Map<List<EducationViewModel>>(entities);
         }
 
         public async Task<ListResult<EducationViewModel>> FilterAsync(PaginationOptions filter)
         {
-            var paginatedResult = await _hirefyAIDb.Set<Education>().ApplyPaginationAsync(filter);
+            var paginatedResult = await _hirefyAIDb.Set<Education>()
+                .Where(x => x.UserId == _userHelper.UserId)
+                .ApplyPaginationAsync(filter);
+
             var Educations = _mapper.Map<List<EducationViewModel>>(paginatedResult.paginatedList);
             return new ListResult<EducationViewModel>(paginatedResult.paginationMetadata, Educations);
         }
 
         public async Task<EducationViewModel> GetByIdAsync(long id)
         {
-            var entity = await _hirefyAIDb.Set<Education>().FirstOrDefaultAsync(x => x.Id == id);
+            var entity = await _hirefyAIDb.Set<Education>()
+                .FirstOrDefaultAsync(x => x.Id == id && x.UserId == _userHelper.UserId);
             if (entity == null)
                 throw new InvalidOperationException($"Education with Id {id} not found.");
             return _mapper.Map<EducationViewModel>(entity);
@@ -58,7 +69,8 @@ namespace Services.Educations
 
         public async Task<EducationViewModel> UpdateAsync(long id, EducationModificationDto educationModificationDto)
         {
-            var entity = await _hirefyAIDb.Set<Education>().FirstOrDefaultAsync(x => x.Id == id);
+            var entity = await _hirefyAIDb.Set<Education>()
+                .FirstOrDefaultAsync(x => x.Id == id && x.UserId == _userHelper.UserId);
             if (entity == null)
                 throw new InvalidOperationException($"Education with {id} not found.");
             _mapper.Map(educationModificationDto, entity);
@@ -69,7 +81,8 @@ namespace Services.Educations
 
         public async Task<EducationViewModel> DeleteAsync(long id)
         {
-            var entity = await _hirefyAIDb.Set<Education>().FirstOrDefaultAsync(x => x.Id == id);
+            var entity = await _hirefyAIDb.Set<Education>()
+                .FirstOrDefaultAsync(x => x.Id == id && x.UserId == _userHelper.UserId);
             if (entity == null)
                 throw new InvalidOperationException($"Education with {id} not found.");
             var entry = _hirefyAIDb.Set<Education>().Remove(entity);

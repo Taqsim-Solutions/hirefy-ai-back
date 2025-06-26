@@ -32,7 +32,10 @@ namespace HirefyAI.Application.Services.Auth
                     RefreshTokenExpireDate = DateTime.UtcNow.AddDays(7)
                 };
 
-                await _hirefyAIDb.Users.AddAsync(user);
+                var entry = await _hirefyAIDb.Users.AddAsync(user);
+                await _hirefyAIDb.SaveChangesAsync();
+                
+                return await _tokenGenerator.GenerateTokenAsync(entry.Entity);
             }
 
             return await _tokenGenerator.GenerateTokenAsync(user);

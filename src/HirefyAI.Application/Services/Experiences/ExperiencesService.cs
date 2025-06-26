@@ -13,6 +13,7 @@ using Common;
 using DataTransferObjects.Experiences;
 using HirefyAI.Infrastructure;
 using HirefyAI.Domain.Entities;
+using HirefyAI.Application.Helpers;
 
 namespace Services.Experiences
 {
@@ -21,10 +22,12 @@ namespace Services.Experiences
     {
         private readonly HirefyAIDb _hirefyAIDb;
         private readonly IMapper _mapper;
-        public ExperiencesService(HirefyAIDb hirefyAIDb, IMapper mapper)
+        private readonly UserHelper _userHelper;
+        public ExperiencesService(HirefyAIDb hirefyAIDb, IMapper mapper, UserHelper userHelper)
         {
             _hirefyAIDb = hirefyAIDb;
             _mapper = mapper;
+            _userHelper = userHelper;
         }
 
         public async Task<ExperienceViewModel> AddAsync(ExperienceCreationDto experienceCreationDto)

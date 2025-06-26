@@ -9,11 +9,13 @@ using Common.Paginations.Models;
 using Common;
 using DataTransferObjects.Users;
 using HirefyAI.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UsersController : ControllerBase
     {
         private readonly IUsersService _usersService;
