@@ -2,6 +2,7 @@ using System.Net;
 using Common;
 using System.Text.Json;
 using FluentValidation;
+using HirefyAI.Application.Helpers;
 
 namespace Middlewares
 {
@@ -21,33 +22,34 @@ namespace Middlewares
             }
             catch (KeyNotFoundException ex)
             {
-                await HandleExceptionAsync(context, HttpStatusCode.NotFound, "Resource not found");
+                await HandleExceptionAsync(context, HttpStatusCode.NotFound, ex, "Resource not found");
             }
             catch (UnauthorizedAccessException ex)
             {
-                await HandleExceptionAsync(context, HttpStatusCode.Unauthorized, "Unauthorized access");
+                await HandleExceptionAsync(context, HttpStatusCode.Unauthorized, ex, "Unauthorized access");
             }
             catch (ArgumentException ex)
             {
-                await HandleExceptionAsync(context, HttpStatusCode.BadRequest, ex.Message);
+                await HandleExceptionAsync(context, HttpStatusCode.BadRequest, ex, "Request is not valid");
             }
             catch (ValidationException ex)
             {
-                await HandleExceptionAsync(context, HttpStatusCode.BadRequest, ex.Message);
+                await HandleExceptionAsync(context, HttpStatusCode.BadRequest, ex, "Request is not valid");
             }
             catch (Exception ex)
             {
-                await HandleExceptionAsync(context, HttpStatusCode.InternalServerError, ex.Message);
+                await HandleExceptionAsync(context, HttpStatusCode.InternalServerError, ex, "Request is not valid");
             }
         }
 
-        private async Task HandleExceptionAsync(HttpContext context, HttpStatusCode statusCode, string errorMessage)
+        private async Task HandleExceptionAsync(HttpContext context, HttpStatusCode statusCode, Exception ex, string errorMessage)
         {
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)statusCode;
             var result = Result.Fail(errorMessage);
             var jsonResult = JsonSerializer.Serialize(result);
             await context.Response.WriteAsync(jsonResult);
+            await TelegramBotHelper.SendExceptionAsync(ex, context);
         }
     }
 
