@@ -14,7 +14,6 @@ public class UserViewModel
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string Email { get; set; }
-    public string PasswordHash { get; set; }
     public bool IsDeleted { get; set; }
     public string CreatedBy { get; set; }
     public DateTime? Created { get; set; }

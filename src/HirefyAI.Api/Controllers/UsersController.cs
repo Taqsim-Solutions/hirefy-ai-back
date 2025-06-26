@@ -8,8 +8,8 @@ using Services.Users;
 using Common.Paginations.Models;
 using Common;
 using DataTransferObjects.Users;
-using HirefyAI.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
+using HirefyAI.Application.Helpers;
 
 namespace Controllers
 {
@@ -19,29 +19,49 @@ namespace Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUsersService _usersService;
-        public UsersController(IUsersService usersService)
+        private readonly UserHelper _userHelper;
+        public UsersController(IUsersService usersService, UserHelper userHelper)
         {
             _usersService = usersService;
+            _userHelper = userHelper;
         }
 
+        [HttpGet("me")]
+        public async Task<Result<UserViewModel>> GetCurrentUserAsync()
+        {
+            return Result<UserViewModel>.Success(
+                await _usersService.GetByIdAsync(_userHelper.UserId));
+        }
+
+        [HttpPut("me")]
+        public async Task<Result<UserViewModel>> UpdateCurrentUserAsync(UserModificationDto userModificationDto)
+        {
+            return Result<UserViewModel>.Success(
+                await _usersService.UpdateAsync(_userHelper.UserId, userModificationDto));
+        }
+
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<Result<UserViewModel>> AddAsync(UserCreationDto userCreationDto)
         {
             return Result<UserViewModel>.Success(await _usersService.AddAsync(userCreationDto));
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<Result<List<UserViewModel>>> GetAllAsync()
         {
             return Result<List<UserViewModel>>.Success(await _usersService.GetAllAsync());
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("filter")]
         public async Task<Result<ListResult<UserViewModel>>> FilterAsync(PaginationOptions filter)
         {
             return Result<ListResult<UserViewModel>>.Success(await _usersService.FilterAsync(filter));
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("{id}")]
         public async Task<Result<UserViewModel>> GetByIdAsync(int id)
         {
@@ -54,6 +74,7 @@ namespace Controllers
             return Result<UserViewModel>.Success(await _usersService.UpdateAsync(id, userModificationDto));
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<Result<UserViewModel>> DeleteAsync(int id)
         {
