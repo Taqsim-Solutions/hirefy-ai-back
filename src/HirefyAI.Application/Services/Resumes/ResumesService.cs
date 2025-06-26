@@ -13,6 +13,7 @@ using Common;
 using DataTransferObjects.Resumes;
 using HirefyAI.Infrastructure;
 using HirefyAI.Domain.Entities;
+using HirefyAI.Application.Helpers;
 
 namespace Services.Resumes
 {
@@ -21,15 +22,18 @@ namespace Services.Resumes
     {
         private readonly HirefyAIDb _hirefyAIDb;
         private readonly IMapper _mapper;
-        public ResumesService(HirefyAIDb hirefyAIDb, IMapper mapper)
+        private readonly UserHelper _userHelper;
+        public ResumesService(HirefyAIDb hirefyAIDb, IMapper mapper, UserHelper userHelper)
         {
             _hirefyAIDb = hirefyAIDb;
             _mapper = mapper;
+            _userHelper = userHelper;
         }
 
         public async Task<ResumeViewModel> AddAsync(ResumeCreationDto resumeCreationDto)
         {
             var entity = _mapper.Map<Resume>(resumeCreationDto);
+            entity.UserId = _userHelper.UserId;
             var entry = await _hirefyAIDb.Set<Resume>().AddAsync(entity);
             await _hirefyAIDb.SaveChangesAsync();
             return _mapper.Map<ResumeViewModel>(entry.Entity);
@@ -37,20 +41,25 @@ namespace Services.Resumes
 
         public async Task<List<ResumeViewModel>> GetAllAsync()
         {
-            var entities = await _hirefyAIDb.Set<Resume>().ToListAsync();
+            var entities = await _hirefyAIDb.Set<Resume>()
+                .Where(x => x.UserId == _userHelper.UserId)
+                .ToListAsync();
             return _mapper.Map<List<ResumeViewModel>>(entities);
         }
 
         public async Task<ListResult<ResumeViewModel>> FilterAsync(PaginationOptions filter)
         {
-            var paginatedResult = await _hirefyAIDb.Set<Resume>().ApplyPaginationAsync(filter);
+            var paginatedResult = await _hirefyAIDb.Set<Resume>()
+                .Where(x => x.UserId == _userHelper.UserId)
+                .ApplyPaginationAsync(filter);
             var Resumes = _mapper.Map<List<ResumeViewModel>>(paginatedResult.paginatedList);
             return new ListResult<ResumeViewModel>(paginatedResult.paginationMetadata, Resumes);
         }
 
         public async Task<ResumeViewModel> GetByIdAsync(int id)
         {
-            var entity = await _hirefyAIDb.Set<Resume>().FirstOrDefaultAsync(x => x.Id == id);
+            var entity = await _hirefyAIDb.Set<Resume>()
+                .FirstOrDefaultAsync(x => x.Id == id && x.UserId == _userHelper.UserId);
             if (entity == null)
                 throw new InvalidOperationException($"Resume with Id {id} not found.");
             return _mapper.Map<ResumeViewModel>(entity);
@@ -58,7 +67,8 @@ namespace Services.Resumes
 
         public async Task<ResumeViewModel> UpdateAsync(int id, ResumeModificationDto resumeModificationDto)
         {
-            var entity = await _hirefyAIDb.Set<Resume>().FirstOrDefaultAsync(x => x.Id == id);
+            var entity = await _hirefyAIDb.Set<Resume>()
+                .FirstOrDefaultAsync(x => x.Id == id && x.UserId == _userHelper.UserId);
             if (entity == null)
                 throw new InvalidOperationException($"Resume with {id} not found.");
             _mapper.Map(resumeModificationDto, entity);
@@ -69,7 +79,8 @@ namespace Services.Resumes
 
         public async Task<ResumeViewModel> DeleteAsync(int id)
         {
-            var entity = await _hirefyAIDb.Set<Resume>().FirstOrDefaultAsync(x => x.Id == id);
+            var entity = await _hirefyAIDb.Set<Resume>()
+                .FirstOrDefaultAsync(x => x.Id == id && x.UserId == _userHelper.UserId);
             if (entity == null)
                 throw new InvalidOperationException($"Resume with {id} not found.");
             var entry = _hirefyAIDb.Set<Resume>().Remove(entity);

@@ -33,6 +33,7 @@ namespace Services.Experiences
         public async Task<ExperienceViewModel> AddAsync(ExperienceCreationDto experienceCreationDto)
         {
             var entity = _mapper.Map<Experience>(experienceCreationDto);
+            entity.UserId = _userHelper.UserId;
             var entry = await _hirefyAIDb.Set<Experience>().AddAsync(entity);
             await _hirefyAIDb.SaveChangesAsync();
             return _mapper.Map<ExperienceViewModel>(entry.Entity);
@@ -40,20 +41,25 @@ namespace Services.Experiences
 
         public async Task<List<ExperienceViewModel>> GetAllAsync()
         {
-            var entities = await _hirefyAIDb.Set<Experience>().ToListAsync();
+            var entities = await _hirefyAIDb.Set<Experience>()
+                .Where(x => x.UserId == _userHelper.UserId)
+                .ToListAsync();
             return _mapper.Map<List<ExperienceViewModel>>(entities);
         }
 
         public async Task<ListResult<ExperienceViewModel>> FilterAsync(PaginationOptions filter)
         {
-            var paginatedResult = await _hirefyAIDb.Set<Experience>().ApplyPaginationAsync(filter);
+            var paginatedResult = await _hirefyAIDb.Set<Experience>()
+                .Where(x => x.UserId == _userHelper.UserId)
+                .ApplyPaginationAsync(filter);
             var Experiences = _mapper.Map<List<ExperienceViewModel>>(paginatedResult.paginatedList);
             return new ListResult<ExperienceViewModel>(paginatedResult.paginationMetadata, Experiences);
         }
 
         public async Task<ExperienceViewModel> GetByIdAsync(int id)
         {
-            var entity = await _hirefyAIDb.Set<Experience>().FirstOrDefaultAsync(x => x.Id == id);
+            var entity = await _hirefyAIDb.Set<Experience>()
+                .FirstOrDefaultAsync(x => x.Id == id && x.UserId == _userHelper.UserId);
             if (entity == null)
                 throw new InvalidOperationException($"Experience with Id {id} not found.");
             return _mapper.Map<ExperienceViewModel>(entity);
@@ -61,7 +67,8 @@ namespace Services.Experiences
 
         public async Task<ExperienceViewModel> UpdateAsync(int id, ExperienceModificationDto experienceModificationDto)
         {
-            var entity = await _hirefyAIDb.Set<Experience>().FirstOrDefaultAsync(x => x.Id == id);
+            var entity = await _hirefyAIDb.Set<Experience>()
+                .FirstOrDefaultAsync(x => x.Id == id && x.UserId == _userHelper.UserId);
             if (entity == null)
                 throw new InvalidOperationException($"Experience with {id} not found.");
             _mapper.Map(experienceModificationDto, entity);
@@ -72,7 +79,8 @@ namespace Services.Experiences
 
         public async Task<ExperienceViewModel> DeleteAsync(int id)
         {
-            var entity = await _hirefyAIDb.Set<Experience>().FirstOrDefaultAsync(x => x.Id == id);
+            var entity = await _hirefyAIDb.Set<Experience>()
+                .FirstOrDefaultAsync(x => x.Id == id && x.UserId == _userHelper.UserId);
             if (entity == null)
                 throw new InvalidOperationException($"Experience with {id} not found.");
             var entry = _hirefyAIDb.Set<Experience>().Remove(entity);

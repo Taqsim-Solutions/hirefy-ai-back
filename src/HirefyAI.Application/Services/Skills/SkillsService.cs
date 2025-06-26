@@ -13,6 +13,7 @@ using Common;
 using DataTransferObjects.Skills;
 using HirefyAI.Infrastructure;
 using HirefyAI.Domain.Entities;
+using HirefyAI.Application.Helpers;
 
 namespace Services.Skills
 {
@@ -21,15 +22,18 @@ namespace Services.Skills
     {
         private readonly HirefyAIDb _hirefyAIDb;
         private readonly IMapper _mapper;
-        public SkillsService(HirefyAIDb hirefyAIDb, IMapper mapper)
+        private readonly UserHelper _userHelper;
+        public SkillsService(HirefyAIDb hirefyAIDb, IMapper mapper, UserHelper userHelper)
         {
             _hirefyAIDb = hirefyAIDb;
             _mapper = mapper;
+            _userHelper = userHelper;
         }
 
         public async Task<SkillViewModel> AddAsync(SkillCreationDto skillCreationDto)
         {
             var entity = _mapper.Map<Skill>(skillCreationDto);
+            entity.UserId = _userHelper.UserId;
             var entry = await _hirefyAIDb.Set<Skill>().AddAsync(entity);
             await _hirefyAIDb.SaveChangesAsync();
             return _mapper.Map<SkillViewModel>(entry.Entity);
@@ -37,20 +41,25 @@ namespace Services.Skills
 
         public async Task<List<SkillViewModel>> GetAllAsync()
         {
-            var entities = await _hirefyAIDb.Set<Skill>().ToListAsync();
+            var entities = await _hirefyAIDb.Set<Skill>()
+                .Where(x => x.UserId == _userHelper.UserId)
+                .ToListAsync();
             return _mapper.Map<List<SkillViewModel>>(entities);
         }
 
         public async Task<ListResult<SkillViewModel>> FilterAsync(PaginationOptions filter)
         {
-            var paginatedResult = await _hirefyAIDb.Set<Skill>().ApplyPaginationAsync(filter);
+            var paginatedResult = await _hirefyAIDb.Set<Skill>()
+                .Where(x => x.UserId == _userHelper.UserId)
+                .ApplyPaginationAsync(filter);
             var Skills = _mapper.Map<List<SkillViewModel>>(paginatedResult.paginatedList);
             return new ListResult<SkillViewModel>(paginatedResult.paginationMetadata, Skills);
         }
 
         public async Task<SkillViewModel> GetByIdAsync(int id)
         {
-            var entity = await _hirefyAIDb.Set<Skill>().FirstOrDefaultAsync(x => x.Id == id);
+            var entity = await _hirefyAIDb.Set<Skill>()
+                .FirstOrDefaultAsync(x => x.Id == id && x.UserId == _userHelper.UserId);
             if (entity == null)
                 throw new InvalidOperationException($"Skill with Id {id} not found.");
             return _mapper.Map<SkillViewModel>(entity);
@@ -58,7 +67,8 @@ namespace Services.Skills
 
         public async Task<SkillViewModel> UpdateAsync(int id, SkillModificationDto skillModificationDto)
         {
-            var entity = await _hirefyAIDb.Set<Skill>().FirstOrDefaultAsync(x => x.Id == id);
+            var entity = await _hirefyAIDb.Set<Skill>()
+                .FirstOrDefaultAsync(x => x.Id == id && x.UserId == _userHelper.UserId);
             if (entity == null)
                 throw new InvalidOperationException($"Skill with {id} not found.");
             _mapper.Map(skillModificationDto, entity);
@@ -69,7 +79,8 @@ namespace Services.Skills
 
         public async Task<SkillViewModel> DeleteAsync(int id)
         {
-            var entity = await _hirefyAIDb.Set<Skill>().FirstOrDefaultAsync(x => x.Id == id);
+            var entity = await _hirefyAIDb.Set<Skill>()
+                .FirstOrDefaultAsync(x => x.Id == id && x.UserId == _userHelper.UserId);
             if (entity == null)
                 throw new InvalidOperationException($"Skill with {id} not found.");
             var entry = _hirefyAIDb.Set<Skill>().Remove(entity);
