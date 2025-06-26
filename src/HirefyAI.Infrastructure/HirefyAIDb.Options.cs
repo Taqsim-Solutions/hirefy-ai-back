@@ -2,6 +2,7 @@
 using HirefyAI.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 using System.Security.Claims;
 
 namespace HirefyAI.Infrastructure
@@ -21,6 +22,16 @@ namespace HirefyAI.Infrastructure
         {
             try
             {
+                var deletedEntries = ChangeTracker
+                    .Entries<ISoftDeletable>()
+                    .Where(e => e.State == EntityState.Deleted);
+
+                foreach (var entry in deletedEntries)
+                {
+                    entry.Entity.IsDeleted = true;
+                    entry.State = EntityState.Modified;
+                }
+
                 var entries = ChangeTracker
                     .Entries()
                     .Where(e =>
@@ -71,6 +82,19 @@ namespace HirefyAI.Infrastructure
         {
             // Apply configurations for entities
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(HirefyAIDb).Assembly);
+
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                if (typeof(ISoftDeletable).IsAssignableFrom(entityType.ClrType))
+                {
+                    var parameter = Expression.Parameter(entityType.ClrType, "e");
+                    var property = Expression.Property(parameter, nameof(ISoftDeletable.IsDeleted));
+                    var compare = Expression.Equal(property, Expression.Constant(false));
+                    var lambda = Expression.Lambda(compare, parameter);
+
+                    entityType.SetQueryFilter(lambda);
+                }
+            }
         }
     }
 }
