@@ -1,6 +1,7 @@
 using System.Net;
 using Common;
 using System.Text.Json;
+using FluentValidation;
 
 namespace Middlewares
 {
@@ -27,6 +28,10 @@ namespace Middlewares
                 await HandleExceptionAsync(context, HttpStatusCode.Unauthorized, "Unauthorized access");
             }
             catch (ArgumentException ex)
+            {
+                await HandleExceptionAsync(context, HttpStatusCode.BadRequest, ex.Message);
+            }
+            catch (ValidationException ex)
             {
                 await HandleExceptionAsync(context, HttpStatusCode.BadRequest, ex.Message);
             }

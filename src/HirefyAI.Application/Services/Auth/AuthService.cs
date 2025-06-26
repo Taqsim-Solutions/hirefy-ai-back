@@ -1,6 +1,8 @@
 ﻿using Common.ServiceAttribute;
+using FluentValidation;
 using HirefyAI.Application.DataTransferObjects.Auth;
 using HirefyAI.Application.Helpers;
+using HirefyAI.Application.Validators.Auth;
 using HirefyAI.Domain.Entities;
 using HirefyAI.Infrastructure;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +23,14 @@ namespace HirefyAI.Application.Services.Auth
 
         public async Task<TokenDto> LoginAsync(LoginDto loginDto)
         {
+            var validator = new LoginDtoValidator();
+            var result = validator.Validate(loginDto);
+
+            if (!result.IsValid)
+            {
+                throw new ValidationException("Model not valid",result.Errors);
+            }
+
             var user = await _hirefyAIDb.Users.FirstOrDefaultAsync(u => u.Email == loginDto.Email);
             if(user is null)
             {
