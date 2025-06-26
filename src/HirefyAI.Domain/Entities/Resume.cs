@@ -14,5 +14,9 @@ namespace HirefyAI.Domain.Entities
         public int UserId { get; set; }
 
         public bool IsDeleted { get; set; }
+
+        public List<Skill> Skills { get; set; } = new List<Skill>();
+        public List<Education> Educations { get; set; } = new List<Education>();
+        public List<Experience> Experiences { get; set; } = new List<Experience>();
     }
 }

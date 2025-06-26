@@ -32,8 +32,11 @@ namespace Services.Educations
 
         public async Task<EducationViewModel> AddAsync(EducationCreationDto educationCreationDto)
         {
+            var isExistEducation = await _hirefyAIDb.Set<Education>()
+                .AnyAsync(x => x.Resume.UserId == _userHelper.UserId && x.Id == educationCreationDto.ResumeId);
+            if (!isExistEducation)
+                throw new InvalidOperationException($"Education not found.");
             var entity = _mapper.Map<Education>(educationCreationDto);
-            entity.UserId = _userHelper.UserId;
             var entry = await _hirefyAIDb.Set<Education>().AddAsync(entity);
             await _hirefyAIDb.SaveChangesAsync();
             return _mapper.Map<EducationViewModel>(entry.Entity);
@@ -42,7 +45,8 @@ namespace Services.Educations
         public async Task<List<EducationViewModel>> GetAllAsync()
         {
             var entities = await _hirefyAIDb.Set<Education>()
-                .Where(x => x.UserId == _userHelper.UserId)
+                .Include(x => x.Resume)
+                .Where(x => x.Resume.UserId == _userHelper.UserId)
                 .ToListAsync();
 
             return _mapper.Map<List<EducationViewModel>>(entities);
@@ -51,7 +55,8 @@ namespace Services.Educations
         public async Task<ListResult<EducationViewModel>> FilterAsync(PaginationOptions filter)
         {
             var paginatedResult = await _hirefyAIDb.Set<Education>()
-                .Where(x => x.UserId == _userHelper.UserId)
+                .Include(x => x.Resume)
+                .Where(x => x.Resume.UserId == _userHelper.UserId)
                 .ApplyPaginationAsync(filter);
 
             var Educations = _mapper.Map<List<EducationViewModel>>(paginatedResult.paginatedList);
@@ -61,7 +66,8 @@ namespace Services.Educations
         public async Task<EducationViewModel> GetByIdAsync(long id)
         {
             var entity = await _hirefyAIDb.Set<Education>()
-                .FirstOrDefaultAsync(x => x.Id == id && x.UserId == _userHelper.UserId);
+                .Include(x => x.Resume)
+                .FirstOrDefaultAsync(x => x.Id == id && x.Resume.UserId == _userHelper.UserId);
             if (entity == null)
                 throw new InvalidOperationException($"Education with Id {id} not found.");
             return _mapper.Map<EducationViewModel>(entity);
@@ -70,7 +76,8 @@ namespace Services.Educations
         public async Task<EducationViewModel> UpdateAsync(long id, EducationModificationDto educationModificationDto)
         {
             var entity = await _hirefyAIDb.Set<Education>()
-                .FirstOrDefaultAsync(x => x.Id == id && x.UserId == _userHelper.UserId);
+                .Include(x => x.Resume)
+                .FirstOrDefaultAsync(x => x.Id == id && x.Resume.UserId == _userHelper.UserId);
             if (entity == null)
                 throw new InvalidOperationException($"Education with {id} not found.");
             _mapper.Map(educationModificationDto, entity);
@@ -82,7 +89,8 @@ namespace Services.Educations
         public async Task<EducationViewModel> DeleteAsync(long id)
         {
             var entity = await _hirefyAIDb.Set<Education>()
-                .FirstOrDefaultAsync(x => x.Id == id && x.UserId == _userHelper.UserId);
+                .Include(x => x.Resume)
+                .FirstOrDefaultAsync(x => x.Id == id && x.Resume.UserId == _userHelper.UserId);
             if (entity == null)
                 throw new InvalidOperationException($"Education with {id} not found.");
             var entry = _hirefyAIDb.Set<Education>().Remove(entity);

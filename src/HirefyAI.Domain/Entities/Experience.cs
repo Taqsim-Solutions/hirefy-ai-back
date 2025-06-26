@@ -9,8 +9,8 @@ namespace HirefyAI.Domain.Entities
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public string Description { get; set; } = string.Empty;
-        public int UserId { get; set; }
-        public User User { get; set; }
+        public Resume Resume { get; set; }
+        public int ResumeId { get; set; }
         public bool IsDeleted { get; set; }
     }
 }

@@ -13,8 +13,8 @@ public class SkillViewModel
     public int Id { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
-    public int UserId { get; set; }
-    public User User { get; set; }
+    public Resume Resume { get; set; }
+    public int ResumeId { get; set; }
     public bool IsDeleted { get; set; }
     public string CreatedBy { get; set; }
     public DateTime? Created { get; set; }

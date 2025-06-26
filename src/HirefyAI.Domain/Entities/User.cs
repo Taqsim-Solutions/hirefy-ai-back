@@ -12,9 +12,6 @@ namespace HirefyAI.Domain.Entities
         public bool IsDeleted { get; set; }
 
         public ICollection<Resume> Resumes { get; set; } = new List<Resume>();
-        public ICollection<Education> Educations { get; set; } = new List<Education>();
-        public ICollection<Skill> Skills { get; set; } = new List<Skill>();
-        public ICollection<Experience> Experiences { get; set; } = new List<Experience>();
         public ICollection<Template> Templates { get; set; } = new List<Template>();
     }
 }
