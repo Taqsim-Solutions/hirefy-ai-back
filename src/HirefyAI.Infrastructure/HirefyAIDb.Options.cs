@@ -1,4 +1,5 @@
 ﻿using HirefyAI.Domain.Common;
+using HirefyAI.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
@@ -8,7 +9,8 @@ namespace HirefyAI.Infrastructure
     public partial class HirefyAIDb
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public HirefyAIDb(IHttpContextAccessor httpContextAccessor,DbContextOptions<HirefyAIDb> _options) : base(_options)
+        public HirefyAIDb(IHttpContextAccessor httpContextAccessor,DbContextOptions<HirefyAIDb> _options)
+            : base(_options)
             => _httpContextAccessor = httpContextAccessor;
 
         /// <summary>
@@ -23,10 +25,7 @@ namespace HirefyAI.Infrastructure
                     .Entries()
                     .Where(e =>
                         e.State == EntityState.Added || e.State == EntityState.Modified)
-                    .Where(e =>
-                        e.Entity is Auditable ||
-                        (e.Entity.GetType().IsGenericType &&
-                         e.Entity.GetType().GetGenericTypeDefinition() == typeof(Auditable<>)));
+                    .Where(e => e.Entity.GetType().IsSubclassOfRawGeneric(typeof(Auditable<>)));
 
                 foreach (var entry in entries)
                 {
@@ -67,13 +66,6 @@ namespace HirefyAI.Infrastructure
 
             return userId ?? "System";
         }
-
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    // Default database Sql Server, you can change it to your preferred database provider.
-        //    //optionsBuilder.UseSqlServer(connectionString: "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=HirefyAIDb;");
-        //    optionsBuilder.UseNpgsql(connectionString: "Host=localhost;Database=HirefyAIDb;Username=postgres;Password=Sardor0618!;");
-        //}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
