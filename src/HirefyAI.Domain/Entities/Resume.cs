@@ -4,7 +4,7 @@ namespace HirefyAI.Domain.Entities
 {
     public class Resume : Auditable<int>, ISoftDeletable
     {
-        public string Name { get; set; } = string.Empty;
+        public string Name { get; set; }
 
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -12,7 +12,7 @@ namespace HirefyAI.Domain.Entities
         public string Address { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
-        public string Summary { get; set; } = string.Empty;
+        public string? Summary { get; set; }
 
         public Template Template { get; set; }
         public int TemplateId { get; set; }

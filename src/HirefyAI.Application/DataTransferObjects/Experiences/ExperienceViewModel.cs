@@ -17,6 +17,8 @@ public class ExperienceViewModel
     public DateTime? EndDate { get; set; }
     public bool IsCurrent => EndDate is null;
     public string Summary { get; set; }
+    public string City { get; set; }
+    public string Country { get; set; }
     public int ResumeId { get; set; }
     public bool IsDeleted { get; set; }
     public string CreatedBy { get; set; }

@@ -16,4 +16,6 @@ public class ExperienceModificationDto
 	public bool IsCurrent { get; set; } = false;
 	public DateTime? EndDate { get; set; }
 	public string Summary { get; set; }
+	public string City { get; set; }
+    public string Country { get; set; }
 }
