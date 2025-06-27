@@ -33,10 +33,11 @@ namespace Services.Skills
 
         public async Task<SkillViewModel> AddAsync(SkillCreationDto skillCreationDto)
         {
-            var isExistSkill = await _hirefyAIDb.Set<Resume>()
-                .AnyAsync(x => x.UserId == _userHelper.UserId && x.Id == skillCreationDto.ResumeId);
-            if (!isExistSkill)
-                throw new InvalidOperationException($"Skill not found.");
+            var isExistSkill = await _hirefyAIDb.Set<Skill>()
+                .Include(x => x.Resume)
+                .AnyAsync(x => x.Resume.UserId == _userHelper.UserId && x.Id == skillCreationDto.ResumeId);
+            if (isExistSkill)
+                throw new InvalidOperationException($"Skill is already exist.");
             var entity = _mapper.Map<Skill>(skillCreationDto);
             var entry = await _hirefyAIDb.Set<Skill>().AddAsync(entity);
             await _hirefyAIDb.SaveChangesAsync();

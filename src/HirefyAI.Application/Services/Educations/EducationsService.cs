@@ -33,9 +33,10 @@ namespace Services.Educations
         public async Task<EducationViewModel> AddAsync(EducationCreationDto educationCreationDto)
         {
             var isExistEducation = await _hirefyAIDb.Set<Education>()
+                .Include(x => x.Resume)
                 .AnyAsync(x => x.Resume.UserId == _userHelper.UserId && x.Id == educationCreationDto.ResumeId);
-            if (!isExistEducation)
-                throw new InvalidOperationException($"Education not found.");
+            if (isExistEducation)
+                throw new InvalidOperationException($"Education is already exist.");
             var entity = _mapper.Map<Education>(educationCreationDto);
             var entry = await _hirefyAIDb.Set<Education>().AddAsync(entity);
             await _hirefyAIDb.SaveChangesAsync();

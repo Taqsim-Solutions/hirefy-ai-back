@@ -34,9 +34,10 @@ namespace Services.Experiences
         public async Task<ExperienceViewModel> AddAsync(ExperienceCreationDto experienceCreationDto)
         {
             var isExistExperience = await _hirefyAIDb.Set<Experience>()
+                .Include(x => x.Resume)
                 .AnyAsync(x => x.Resume.UserId == _userHelper.UserId && x.Id == experienceCreationDto.ResumeId);
-            if (!isExistExperience)
-                throw new InvalidOperationException($"Experience not found.");
+            if (isExistExperience)
+                throw new InvalidOperationException($"Experience is already exist.");
 
             var entity = _mapper.Map<Experience>(experienceCreationDto);
             var entry = await _hirefyAIDb.Set<Experience>().AddAsync(entity);

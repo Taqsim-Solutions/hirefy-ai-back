@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HirefyAI.Infrastructure.Migrations
 {
     [DbContext(typeof(HirefyAIDb))]
-    [Migration("20250625145733_Init")]
+    [Migration("20250626151526_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -63,15 +63,15 @@ namespace HirefyAI.Infrastructure.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("text");
 
+                    b.Property<int>("ResumeId")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("ResumeId");
 
                     b.ToTable("Educations");
                 });
@@ -114,15 +114,15 @@ namespace HirefyAI.Infrastructure.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("text");
 
+                    b.Property<int>("ResumeId")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("ResumeId");
 
                     b.ToTable("Experiences");
                 });
@@ -204,12 +204,12 @@ namespace HirefyAI.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("UserId")
+                    b.Property<int>("ResumeId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("ResumeId");
 
                     b.ToTable("Skills");
                 });
@@ -245,7 +245,7 @@ namespace HirefyAI.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -304,24 +304,24 @@ namespace HirefyAI.Infrastructure.Migrations
 
             modelBuilder.Entity("HirefyAI.Domain.Entities.Education", b =>
                 {
-                    b.HasOne("HirefyAI.Domain.Entities.User", "User")
+                    b.HasOne("HirefyAI.Domain.Entities.Resume", "Resume")
                         .WithMany("Educations")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("ResumeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("Resume");
                 });
 
             modelBuilder.Entity("HirefyAI.Domain.Entities.Experience", b =>
                 {
-                    b.HasOne("HirefyAI.Domain.Entities.User", "User")
+                    b.HasOne("HirefyAI.Domain.Entities.Resume", "Resume")
                         .WithMany("Experiences")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("ResumeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("Resume");
                 });
 
             modelBuilder.Entity("HirefyAI.Domain.Entities.Resume", b =>
@@ -345,8 +345,19 @@ namespace HirefyAI.Infrastructure.Migrations
 
             modelBuilder.Entity("HirefyAI.Domain.Entities.Skill", b =>
                 {
-                    b.HasOne("HirefyAI.Domain.Entities.User", "User")
+                    b.HasOne("HirefyAI.Domain.Entities.Resume", "Resume")
                         .WithMany("Skills")
+                        .HasForeignKey("ResumeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Resume");
+                });
+
+            modelBuilder.Entity("HirefyAI.Domain.Entities.Template", b =>
+                {
+                    b.HasOne("HirefyAI.Domain.Entities.User", "User")
+                        .WithMany("Templates")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -354,22 +365,18 @@ namespace HirefyAI.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("HirefyAI.Domain.Entities.Template", b =>
-                {
-                    b.HasOne("HirefyAI.Domain.Entities.User", null)
-                        .WithMany("Templates")
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("HirefyAI.Domain.Entities.User", b =>
+            modelBuilder.Entity("HirefyAI.Domain.Entities.Resume", b =>
                 {
                     b.Navigation("Educations");
 
                     b.Navigation("Experiences");
 
-                    b.Navigation("Resumes");
-
                     b.Navigation("Skills");
+                });
+
+            modelBuilder.Entity("HirefyAI.Domain.Entities.User", b =>
+                {
+                    b.Navigation("Resumes");
 
                     b.Navigation("Templates");
                 });

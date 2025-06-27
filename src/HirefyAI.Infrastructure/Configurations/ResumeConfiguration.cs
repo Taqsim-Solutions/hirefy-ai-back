@@ -12,6 +12,11 @@ namespace HirefyAI.Infrastructure.Configurations
                 .WithMany(x => x.Resumes)
                 .HasForeignKey(x => x.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(x => x.Educations)
+                .WithOne(x => x.Resume)
+                .HasForeignKey(x => x.ResumeId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

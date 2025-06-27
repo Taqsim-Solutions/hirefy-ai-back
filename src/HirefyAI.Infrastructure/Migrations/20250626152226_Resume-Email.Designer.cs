@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HirefyAI.Infrastructure.Migrations
 {
     [DbContext(typeof(HirefyAIDb))]
-    [Migration("20250626145634_Resume-Based")]
-    partial class ResumeBased
+    [Migration("20250626152226_Resume-Email")]
+    partial class ResumeEmail
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -139,10 +139,6 @@ namespace HirefyAI.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("CreatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<bool>("IsDeleted")
@@ -305,7 +301,7 @@ namespace HirefyAI.Infrastructure.Migrations
             modelBuilder.Entity("HirefyAI.Domain.Entities.Education", b =>
                 {
                     b.HasOne("HirefyAI.Domain.Entities.Resume", "Resume")
-                        .WithMany()
+                        .WithMany("Educations")
                         .HasForeignKey("ResumeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -316,7 +312,7 @@ namespace HirefyAI.Infrastructure.Migrations
             modelBuilder.Entity("HirefyAI.Domain.Entities.Experience", b =>
                 {
                     b.HasOne("HirefyAI.Domain.Entities.Resume", "Resume")
-                        .WithMany()
+                        .WithMany("Experiences")
                         .HasForeignKey("ResumeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -346,7 +342,7 @@ namespace HirefyAI.Infrastructure.Migrations
             modelBuilder.Entity("HirefyAI.Domain.Entities.Skill", b =>
                 {
                     b.HasOne("HirefyAI.Domain.Entities.Resume", "Resume")
-                        .WithMany()
+                        .WithMany("Skills")
                         .HasForeignKey("ResumeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -363,6 +359,15 @@ namespace HirefyAI.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("HirefyAI.Domain.Entities.Resume", b =>
+                {
+                    b.Navigation("Educations");
+
+                    b.Navigation("Experiences");
+
+                    b.Navigation("Skills");
                 });
 
             modelBuilder.Entity("HirefyAI.Domain.Entities.User", b =>

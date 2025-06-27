@@ -138,10 +138,6 @@ namespace HirefyAI.Infrastructure.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
@@ -302,7 +298,7 @@ namespace HirefyAI.Infrastructure.Migrations
             modelBuilder.Entity("HirefyAI.Domain.Entities.Education", b =>
                 {
                     b.HasOne("HirefyAI.Domain.Entities.Resume", "Resume")
-                        .WithMany()
+                        .WithMany("Educations")
                         .HasForeignKey("ResumeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -313,7 +309,7 @@ namespace HirefyAI.Infrastructure.Migrations
             modelBuilder.Entity("HirefyAI.Domain.Entities.Experience", b =>
                 {
                     b.HasOne("HirefyAI.Domain.Entities.Resume", "Resume")
-                        .WithMany()
+                        .WithMany("Experiences")
                         .HasForeignKey("ResumeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -343,7 +339,7 @@ namespace HirefyAI.Infrastructure.Migrations
             modelBuilder.Entity("HirefyAI.Domain.Entities.Skill", b =>
                 {
                     b.HasOne("HirefyAI.Domain.Entities.Resume", "Resume")
-                        .WithMany()
+                        .WithMany("Skills")
                         .HasForeignKey("ResumeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -360,6 +356,15 @@ namespace HirefyAI.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("HirefyAI.Domain.Entities.Resume", b =>
+                {
+                    b.Navigation("Educations");
+
+                    b.Navigation("Experiences");
+
+                    b.Navigation("Skills");
                 });
 
             modelBuilder.Entity("HirefyAI.Domain.Entities.User", b =>

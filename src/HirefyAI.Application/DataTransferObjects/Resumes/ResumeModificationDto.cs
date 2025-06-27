@@ -11,6 +11,4 @@ namespace DataTransferObjects.Resumes;
 public class ResumeModificationDto
 {
 	public string Name { get; set; }
-	public string Email { get; set; }
-	public int TemplateId { get; set; }
 }

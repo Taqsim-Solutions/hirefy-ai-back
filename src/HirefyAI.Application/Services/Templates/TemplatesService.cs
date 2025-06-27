@@ -13,6 +13,7 @@ using Common;
 using DataTransferObjects.Templates;
 using HirefyAI.Infrastructure;
 using HirefyAI.Domain.Entities;
+using HirefyAI.Application.Helpers;
 
 namespace Services.Templates
 {
@@ -21,16 +22,19 @@ namespace Services.Templates
     {
         private readonly HirefyAIDb _hirefyAIDb;
         private readonly IMapper _mapper;
-        public TemplatesService(HirefyAIDb hirefyAIDb, IMapper mapper)
+        private readonly UserHelper _userHelper;
+        public TemplatesService(HirefyAIDb hirefyAIDb, IMapper mapper, UserHelper userHelper)
         {
             _hirefyAIDb = hirefyAIDb;
             _mapper = mapper;
+            _userHelper = userHelper;
         }
 
         public async Task<TemplateViewModel> AddAsync(TemplateCreationDto templateCreationDto)
         {
             var entity = _mapper.Map<Template>(templateCreationDto);
             var entry = await _hirefyAIDb.Set<Template>().AddAsync(entity);
+            entity.UserId = _userHelper.UserId; 
             await _hirefyAIDb.SaveChangesAsync();
             return _mapper.Map<TemplateViewModel>(entry.Entity);
         }
