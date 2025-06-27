@@ -22,7 +22,7 @@ namespace HirefyAI.Application.DataTransferObjects.Resumes
         public User User { get; set; }
         public int UserId { get; set; }
 
-        public List<string> Skills { get; set; } = new List<string>();
+        public string? Skills { get; set; }
         public List<EducationViewModel> Educations { get; set; } = new List<EducationViewModel>();
         public List<ExperienceViewModel> Experiences { get; set; } = new List<ExperienceViewModel>();
 

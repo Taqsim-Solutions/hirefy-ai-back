@@ -20,7 +20,7 @@ public class ResumeModificationDto
     public string Email { get; set; }
     public string Summary { get; set; }
 
-    public List<string> Skills { get; set; } = new List<string>();
+    public string? Skills { get; set; }
     public List<EducationModificationDto> Educations { get; set; } = new List<EducationModificationDto>();
     public List<ExperienceModificationDto> Experiences { get; set; } = new List<ExperienceModificationDto>();
 }

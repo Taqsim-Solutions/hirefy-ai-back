@@ -62,7 +62,6 @@ namespace Services.Resumes
             var entity = await _hirefyAIDb.Set<Resume>()
                 .Include(x => x.Educations)
                 .Include(x => x.Experiences)
-                .Include(x => x.Skills)
                 .Include(x => x.Template)
                 .FirstOrDefaultAsync(x => x.Id == id && x.UserId == _userHelper.UserId);
             if (entity == null)
@@ -75,7 +74,6 @@ namespace Services.Resumes
             var entity = await _hirefyAIDb.Set<Resume>()
                 .Include(x => x.Educations)
                 .Include(x => x.Experiences)
-                .Include(x => x.Skills)
                 .FirstOrDefaultAsync(x => x.Id == id && x.UserId == _userHelper.UserId);
             if (entity == null)
                 throw new InvalidOperationException($"Resume with {id} not found.");

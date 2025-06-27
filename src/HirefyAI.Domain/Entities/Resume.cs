@@ -22,7 +22,7 @@ namespace HirefyAI.Domain.Entities
 
         public bool IsDeleted { get; set; }
 
-        public List<string> Skills { get; set; } = new List<string>();
+        public string? Skills { get; set; }
         public List<Education> Educations { get; set; } = new List<Education>();
         public List<Experience> Experiences { get; set; } = new List<Experience>();
     }
