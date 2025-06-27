@@ -34,7 +34,7 @@ namespace Middlewares
             }
             catch (ValidationException ex)
             {
-                await HandleExceptionAsync(context, HttpStatusCode.BadRequest, ex, "Request is not valid");
+                await HandleExceptionAsync(context, HttpStatusCode.BadRequest, ex, ex.Message);
             }
             catch (Exception ex)
             {

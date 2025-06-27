@@ -28,7 +28,13 @@ namespace HirefyAI.Application.Services.Auth
 
             if (!result.IsValid)
             {
-                throw new ValidationException("Model not valid",result.Errors);
+                var errors = result.Errors
+                    .Select(e => $"• {e.PropertyName}: {e.ErrorMessage}")
+                    .ToList();
+
+                var message = string.Join("\n", errors);
+
+                throw new ValidationException(string.Join("\n", result.Errors));
             }
 
             var user = await _hirefyAIDb.Users.FirstOrDefaultAsync(u => u.Email == loginDto.Email);
