@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using HirefyAI.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HirefyAI.Infrastructure.Migrations
 {
     [DbContext(typeof(HirefyAIDb))]
-    partial class HirefyAIDbModelSnapshot : ModelSnapshot
+    [Migration("20250627133112_User-LastName")]
+    partial class UserLastName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -242,20 +245,6 @@ namespace HirefyAI.Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Templates");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Created = new DateTime(2025, 6, 27, 13, 37, 32, 961, DateTimeKind.Utc).AddTicks(9637),
-                            CreatedBy = "System",
-                            Description = "This is the default template for resumes.",
-                            IsDeleted = false,
-                            LastModified = new DateTime(2025, 6, 27, 13, 37, 32, 961, DateTimeKind.Utc).AddTicks(9643),
-                            LastModifiedBy = "System",
-                            Name = "Default Template",
-                            UserId = 1
-                        });
                 });
 
             modelBuilder.Entity("HirefyAI.Domain.Entities.User", b =>
@@ -305,18 +294,6 @@ namespace HirefyAI.Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Email = "sardorstudent0618@gmail.com",
-                            FirstName = "Admin",
-                            IsDeleted = false,
-                            LastName = "Admin",
-                            RefreshToken = "cd7d3a31-393f-4fb9-894e-23617ea67e70",
-                            RefreshTokenExpireDate = new DateTime(2025, 6, 27, 13, 37, 32, 962, DateTimeKind.Utc).AddTicks(1199)
-                        });
                 });
 
             modelBuilder.Entity("HirefyAI.Domain.Entities.Education", b =>

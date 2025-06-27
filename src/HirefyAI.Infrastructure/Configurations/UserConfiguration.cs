@@ -9,6 +9,17 @@ namespace HirefyAI.Infrastructure.Configurations
         public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.HasIndex(u => u.Email).IsUnique();
+
+            // Todo: Configurationdan olishi kerak
+            builder.HasData(new User()
+            {
+                Id = 1,
+                FirstName = "Admin",
+                LastName = "Admin",
+                Email = "sardorstudent0618@gmail.com",
+                RefreshToken = Guid.NewGuid().ToString(),
+                RefreshTokenExpireDate = DateTime.UtcNow,
+            });
         }
     }
 }
