@@ -50,7 +50,8 @@ namespace Services.Users
 
         public async Task<UserViewModel> GetByIdAsync(int id)
         {
-            var entity = await _hirefyAIDb.Set<User>().FirstOrDefaultAsync(x => x.Id == id);
+            var entity = await _hirefyAIDb.Set<User>()
+                .FirstOrDefaultAsync(x => x.Id == id);
             if (entity == null)
                 throw new InvalidOperationException($"User with Id {id} not found.");
             return _mapper.Map<UserViewModel>(entity);

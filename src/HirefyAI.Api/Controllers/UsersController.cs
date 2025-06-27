@@ -15,7 +15,6 @@ namespace Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class UsersController : ControllerBase
     {
         private readonly IUsersService _usersService;
@@ -26,6 +25,7 @@ namespace Controllers
             _userHelper = userHelper;
         }
 
+        [Authorize]
         [HttpGet("me")]
         public async Task<Result<UserViewModel>> GetCurrentUserAsync()
         {
@@ -33,6 +33,7 @@ namespace Controllers
                 await _usersService.GetByIdAsync(_userHelper.UserId));
         }
 
+        [Authorize]
         [HttpPut("me")]
         public async Task<Result<UserViewModel>> UpdateCurrentUserAsync(UserModificationDto userModificationDto)
         {
@@ -68,17 +69,11 @@ namespace Controllers
             return Result<UserViewModel>.Success(await _usersService.GetByIdAsync(id));
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<Result<UserViewModel>> UpdateAsync(int id, UserModificationDto userModificationDto)
         {
             return Result<UserViewModel>.Success(await _usersService.UpdateAsync(id, userModificationDto));
-        }
-
-        [Authorize(Roles = "Admin")]
-        [HttpDelete("{id}")]
-        public async Task<Result<UserViewModel>> DeleteAsync(int id)
-        {
-            return Result<UserViewModel>.Success(await _usersService.DeleteAsync(id));
         }
     }
 }
