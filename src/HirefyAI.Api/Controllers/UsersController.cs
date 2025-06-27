@@ -42,13 +42,6 @@ namespace Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpPost]
-        public async Task<Result<UserViewModel>> AddAsync(UserCreationDto userCreationDto)
-        {
-            return Result<UserViewModel>.Success(await _usersService.AddAsync(userCreationDto));
-        }
-
-        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<Result<List<UserViewModel>>> GetAllAsync()
         {
@@ -67,13 +60,6 @@ namespace Controllers
         public async Task<Result<UserViewModel>> GetByIdAsync(int id)
         {
             return Result<UserViewModel>.Success(await _usersService.GetByIdAsync(id));
-        }
-
-        [Authorize(Roles = "Admin")]
-        [HttpPut("{id}")]
-        public async Task<Result<UserViewModel>> UpdateAsync(int id, UserModificationDto userModificationDto)
-        {
-            return Result<UserViewModel>.Success(await _usersService.UpdateAsync(id, userModificationDto));
         }
     }
 }
