@@ -4,6 +4,9 @@
 //-----------------------------------------------------------------------
 
 using System;
+using DataTransferObjects.Educations;
+using DataTransferObjects.Experiences;
+using DataTransferObjects.Skills;
 using HirefyAI.Domain.Entities;
 
 namespace DataTransferObjects.Resumes;
@@ -18,4 +21,8 @@ public class ResumeModificationDto
     public string Address { get; set; }
     public string Phone { get; set; }
     public string Email { get; set; }
+
+    public List<SkillModificationDto> Skills { get; set; } = new List<SkillModificationDto>();
+    public List<EducationModificationDto> Educations { get; set; } = new List<EducationModificationDto>();
+    public List<ExperienceModificationDto> Experiences { get; set; } = new List<ExperienceModificationDto>();
 }

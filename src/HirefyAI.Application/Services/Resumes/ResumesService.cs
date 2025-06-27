@@ -73,9 +73,28 @@ namespace Services.Resumes
         public async Task<ResumeViewModel> UpdateAsync(int id, ResumeModificationDto resumeModificationDto)
         {
             var entity = await _hirefyAIDb.Set<Resume>()
+                .Include(x => x.Educations)
+                .Include(x => x.Experiences)
+                .Include(x => x.Skills)
                 .FirstOrDefaultAsync(x => x.Id == id && x.UserId == _userHelper.UserId);
             if (entity == null)
                 throw new InvalidOperationException($"Resume with {id} not found.");
+
+            foreach (var education in entity.Educations)
+            {
+                education.IsDeleted = true;
+            }
+
+            foreach (var experience in entity.Experiences)
+            {
+                experience.IsDeleted = true;
+            }
+
+            foreach (var skill in entity.Skills)
+            {
+                skill.IsDeleted = true;
+            }
+
             _mapper.Map(resumeModificationDto, entity);
             var entry = _hirefyAIDb.Set<Resume>().Update(entity);
             await _hirefyAIDb.SaveChangesAsync();
