@@ -14,6 +14,7 @@ using DataTransferObjects.Resumes;
 using HirefyAI.Infrastructure;
 using HirefyAI.Domain.Entities;
 using HirefyAI.Application.Helpers;
+using HirefyAI.Application.DataTransferObjects.Resumes;
 
 namespace Services.Resumes
 {
@@ -56,13 +57,17 @@ namespace Services.Resumes
             return new ListResult<ResumeViewModel>(paginatedResult.paginationMetadata, Resumes);
         }
 
-        public async Task<ResumeViewModel> GetByIdAsync(int id)
+        public async Task<ResumeDetailedViewModel> GetByIdAsync(int id)
         {
             var entity = await _hirefyAIDb.Set<Resume>()
+                .Include(x => x.Educations)
+                .Include(x => x.Experiences)
+                .Include(x => x.Skills)
+                .Include(x => x.Template)
                 .FirstOrDefaultAsync(x => x.Id == id && x.UserId == _userHelper.UserId);
             if (entity == null)
                 throw new InvalidOperationException($"Resume with Id {id} not found.");
-            return _mapper.Map<ResumeViewModel>(entity);
+            return _mapper.Map<ResumeDetailedViewModel>(entity);
         }
 
         public async Task<ResumeViewModel> UpdateAsync(int id, ResumeModificationDto resumeModificationDto)
@@ -97,6 +102,7 @@ namespace Services.Resumes
         public ResumeMappingProfile()
         {
             CreateMap<Resume, ResumeViewModel>();
+            CreateMap<Resume, ResumeDetailedViewModel>();
             CreateMap<ResumeCreationDto, Resume>();
             CreateMap<ResumeModificationDto, Resume>();
         }

@@ -10,6 +10,7 @@ using Common;
 using DataTransferObjects.Resumes;
 using HirefyAI.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
+using HirefyAI.Application.DataTransferObjects.Resumes;
 
 namespace Controllers
 {
@@ -43,9 +44,9 @@ namespace Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<Result<ResumeViewModel>> GetByIdAsync(int id)
+        public async Task<Result<ResumeDetailedViewModel>> GetByIdAsync(int id)
         {
-            return Result<ResumeViewModel>.Success(await _resumesService.GetByIdAsync(id));
+            return Result<ResumeDetailedViewModel>.Success(await _resumesService.GetByIdAsync(id));
         }
 
         [HttpPut("{id}")]

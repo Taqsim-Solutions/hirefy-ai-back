@@ -7,6 +7,7 @@ using Common.Paginations.Models;
 using Common;
 using DataTransferObjects.Resumes;
 using HirefyAI.Domain.Entities;
+using HirefyAI.Application.DataTransferObjects.Resumes;
 
 namespace Services.Resumes
 {
@@ -15,7 +16,7 @@ namespace Services.Resumes
         Task<ResumeViewModel> AddAsync(ResumeCreationDto resumeCreationDto);
         Task<List<ResumeViewModel>> GetAllAsync();
         Task<ListResult<ResumeViewModel>> FilterAsync(PaginationOptions filter);
-        Task<ResumeViewModel> GetByIdAsync(int id);
+        Task<ResumeDetailedViewModel> GetByIdAsync(int id);
         Task<ResumeViewModel> UpdateAsync(int id, ResumeModificationDto resumeModificationDto);
         Task<ResumeViewModel> DeleteAsync(int id);
     }
