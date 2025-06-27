@@ -14,6 +14,7 @@ using DataTransferObjects.Educations;
 using HirefyAI.Infrastructure;
 using HirefyAI.Domain.Entities;
 using HirefyAI.Application.Helpers;
+using FluentValidation;
 
 namespace Services.Educations
 {

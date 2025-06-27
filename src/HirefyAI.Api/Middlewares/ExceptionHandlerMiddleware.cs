@@ -34,7 +34,9 @@ namespace Middlewares
             }
             catch (ValidationException ex)
             {
-                await HandleExceptionAsync(context, HttpStatusCode.BadRequest, ex, ex.Message);
+                var errors = ex.Errors.Select(e => e.ErrorMessage).ToList();
+                var errorMessage = string.Join(", ", errors);
+                await HandleExceptionAsync(context, HttpStatusCode.BadRequest, ex, errorMessage);
             }
             catch (Exception ex)
             {

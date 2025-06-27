@@ -13,6 +13,7 @@ public class ExperienceModificationDto
 	public string JobTitle { get; set; }
 	public string CompanyName { get; set; }
 	public DateTime StartDate { get; set; }
+	public bool IsCurrent { get; set; } = false;
 	public DateTime? EndDate { get; set; }
-	public string Description { get; set; }
+	public string Summary { get; set; }
 }

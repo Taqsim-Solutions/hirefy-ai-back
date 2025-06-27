@@ -40,6 +40,7 @@ namespace Services.Experiences
                 throw new InvalidOperationException($"Experience is already exist.");
 
             var entity = _mapper.Map<Experience>(experienceCreationDto);
+            entity.EndDate = experienceCreationDto.IsCurrent ? null : experienceCreationDto.EndDate;
             var entry = await _hirefyAIDb.Set<Experience>().AddAsync(entity);
             await _hirefyAIDb.SaveChangesAsync();
             return _mapper.Map<ExperienceViewModel>(entry.Entity);
@@ -82,6 +83,7 @@ namespace Services.Experiences
             if (entity == null)
                 throw new InvalidOperationException($"Experience with {id} not found.");
             _mapper.Map(experienceModificationDto, entity);
+            entity.EndDate = experienceModificationDto.IsCurrent ? null : experienceModificationDto.EndDate;
             var entry = _hirefyAIDb.Set<Experience>().Update(entity);
             await _hirefyAIDb.SaveChangesAsync();
             return _mapper.Map<ExperienceViewModel>(entry.Entity);

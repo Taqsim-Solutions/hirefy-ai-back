@@ -21,6 +21,7 @@ public class ResumeCreationDto
     public string Address { get; set; }
     public string Phone { get; set; }
     public string Email { get; set; }
+    public string Summary { get; set; }
 
     public List<SkillCreationDto> Skills { get; set; } = new List<SkillCreationDto>();
     public List<EducationCreationDto> Educations { get; set; } = new List<EducationCreationDto>();

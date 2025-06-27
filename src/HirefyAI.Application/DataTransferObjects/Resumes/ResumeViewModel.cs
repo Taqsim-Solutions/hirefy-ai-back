@@ -19,6 +19,7 @@ public class ResumeViewModel
     public string Address { get; set; }
     public string Phone { get; set; }
     public string Email { get; set; }
+    public string Summary { get; set; }
 
     public Template Template { get; set; }
     public int TemplateId { get; set; }

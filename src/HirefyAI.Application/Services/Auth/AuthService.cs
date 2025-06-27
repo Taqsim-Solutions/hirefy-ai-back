@@ -2,7 +2,6 @@
 using FluentValidation;
 using HirefyAI.Application.DataTransferObjects.Auth;
 using HirefyAI.Application.Helpers;
-using HirefyAI.Application.Validators.Auth;
 using HirefyAI.Domain.Entities;
 using HirefyAI.Infrastructure;
 using Microsoft.EntityFrameworkCore;
@@ -14,27 +13,22 @@ namespace HirefyAI.Application.Services.Auth
     {
         private readonly HirefyAIDb _hirefyAIDb;
         private readonly TokenGenerator _tokenGenerator;
+        private readonly IValidator<LoginDto> _loginValidator;
 
-        public AuthService(HirefyAIDb hirefyAIDb, TokenGenerator tokenGenerator)
+        public AuthService(HirefyAIDb hirefyAIDb, TokenGenerator tokenGenerator, IValidator<LoginDto> loginValidator)
         {
             _hirefyAIDb = hirefyAIDb;
             _tokenGenerator = tokenGenerator;
+            _loginValidator = loginValidator;
         }
 
         public async Task<TokenDto> LoginAsync(LoginDto loginDto)
         {
-            var validator = new LoginDtoValidator();
-            var result = validator.Validate(loginDto);
+            var result = _loginValidator.Validate(loginDto);
 
             if (!result.IsValid)
             {
-                var errors = result.Errors
-                    .Select(e => $"• {e.PropertyName}: {e.ErrorMessage}")
-                    .ToList();
-
-                var message = string.Join("\n", errors);
-
-                throw new ValidationException(string.Join("\n", result.Errors));
+                throw new ValidationException(errors: result.Errors);
             }
 
             var user = await _hirefyAIDb.Users.FirstOrDefaultAsync(u => u.Email == loginDto.Email);
