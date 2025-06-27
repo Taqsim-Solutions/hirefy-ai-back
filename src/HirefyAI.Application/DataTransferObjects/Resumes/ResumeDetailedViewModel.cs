@@ -1,6 +1,5 @@
 ﻿using DataTransferObjects.Educations;
 using DataTransferObjects.Experiences;
-using DataTransferObjects.Skills;
 using HirefyAI.Domain.Entities;
 
 namespace HirefyAI.Application.DataTransferObjects.Resumes
@@ -23,7 +22,7 @@ namespace HirefyAI.Application.DataTransferObjects.Resumes
         public User User { get; set; }
         public int UserId { get; set; }
 
-        public List<SkillViewModel> Skills { get; set; } = new List<SkillViewModel>();
+        public List<string> Skills { get; set; } = new List<string>();
         public List<EducationViewModel> Educations { get; set; } = new List<EducationViewModel>();
         public List<ExperienceViewModel> Experiences { get; set; } = new List<ExperienceViewModel>();
 

@@ -13,8 +13,8 @@ public class EducationViewModel
     public long Id { get; set; }
     public string Degree { get; set; }
     public string Institution { get; set; }
-    public DateTime StartDate { get; set; }
-    public DateTime? EndDate { get; set; }
+    public DateOnly StartDate { get; set; }
+    public DateOnly? EndDate { get; set; }
     public string Description { get; set; }
     public long ResumeId { get; set; }
     public bool IsDeleted { get; set; }

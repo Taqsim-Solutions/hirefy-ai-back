@@ -16,7 +16,6 @@ namespace HirefyAI.Application.Validators
             RuleFor(x => x.Email).NotEmpty().EmailAddress();
             RuleFor(x => x.TemplateId).GreaterThan(0);
 
-            RuleForEach(x => x.Skills).SetValidator(new SkillCreationDtoValidator());
             RuleForEach(x => x.Educations).SetValidator(new EducationCreationDtoValidator());
             RuleForEach(x => x.Experiences).SetValidator(new ExperienceCreationDtoValidator());
         }

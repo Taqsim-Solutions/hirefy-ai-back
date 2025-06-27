@@ -90,11 +90,6 @@ namespace Services.Resumes
                 experience.IsDeleted = true;
             }
 
-            foreach (var skill in entity.Skills)
-            {
-                skill.IsDeleted = true;
-            }
-
             _mapper.Map(resumeModificationDto, entity);
             var entry = _hirefyAIDb.Set<Resume>().Update(entity);
             await _hirefyAIDb.SaveChangesAsync();
