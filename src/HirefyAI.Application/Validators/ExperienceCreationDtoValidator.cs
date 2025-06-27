@@ -9,7 +9,7 @@ namespace HirefyAI.Application.Validators
         {
             RuleFor(x => x.JobTitle).NotEmpty().MaximumLength(100);
             RuleFor(x => x.CompanyName).NotEmpty().MaximumLength(100);
-            RuleFor(x => x.StartDate).LessThanOrEqualTo(DateTime.UtcNow);
+            //RuleFor(x => x.StartDate).LessThanOrEqualTo(DateOnly);
             RuleFor(x => x.EndDate).GreaterThanOrEqualTo(x => x.StartDate)
                                    .When(x => x.EndDate.HasValue);
             RuleFor(x => x.Summary).MaximumLength(300);

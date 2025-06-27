@@ -13,8 +13,8 @@ public class ExperienceViewModel
     public int Id { get; set; }
     public string JobTitle { get; set; }
     public string CompanyName { get; set; }
-    public DateTime StartDate { get; set; }
-    public DateTime? EndDate { get; set; }
+    public DateOnly StartDate { get; set; }
+    public DateOnly? EndDate { get; set; }
     public bool IsCurrent => EndDate is null;
     public string Summary { get; set; }
     public string City { get; set; }
